@@ -1,0 +1,102 @@
+.game, .leaderboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* Gradient background */
+    background: linear-gradient(135deg, #f9f0ff 0%, #e2f0ff 100%);
+    /* Rounded corners */
+    border-radius: 2rem;
+  
+    /* Padding and margin */
+    margin: 1.5rem;
+    padding: 1.5rem;
+  
+    /* Fancy border */
+    border: 0.5rem solid transparent;
+    background-clip: padding-box;
+    position: relative;
+  
+    /* Soft shadow for depth */
+    box-shadow: 0 10px 30px rgba(62, 19, 131, 0.15), 0 6px 10px rgba(31, 38, 135, 0.1);
+  }
+  
+  .game::before, .leaderboard::before {
+    content: "";
+    position: absolute;
+    top: -0.5rem;
+    left: -0.5rem;
+    right: -0.5rem;
+    bottom: -0.5rem;
+    z-index: -1;
+    border-radius: 2.5rem;
+    background: linear-gradient(45deg, #9d4edd, #5a189a, #3c096c, #240046);
+    box-shadow: 0 0 20px rgba(157, 78, 221, 0.5), inset 0 0 20px rgba(157, 78, 221, 0.2);
+  }
+  
+  .game h2 {
+    color: #5a189a;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1.8rem;
+  }
+  
+  .game h2 span {
+    background: linear-gradient(45deg, #9d4edd, #5a189a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 800;
+    font-size: 2rem;
+  }
+  
+  .game p {
+    color: #3c096c;
+    margin: 0.7rem 0;
+    text-align: center;
+    font-size: 1rem;
+  }
+  
+  .game p[style*="color: red"] {
+    background-color: rgba(255, 200, 200, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border-left: 3px solid #ff6b6b;
+  }
+  
+  .ranking {
+    background: linear-gradient(135deg, rgba(157, 78, 221, 0.2), rgba(90, 24, 154, 0.1));
+    padding: 0.8rem 1.5rem;
+    border-radius: 1rem;
+    margin: 1rem 0;
+    color: #5a189a;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(157, 78, 221, 0.3);
+  }
+  
+  .game button {
+    background: linear-gradient(45deg, #9d4edd, #5a189a);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 1.5rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(90, 24, 154, 0.3);
+  }
+  
+  .game button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(90, 24, 154, 0.4);
+    background: linear-gradient(45deg, #b65eff, #7b2cbf);
+  }
+  
+  .game button:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 10px rgba(90, 24, 154, 0.3);
+  }

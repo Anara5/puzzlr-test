@@ -1,0 +1,120 @@
+.leaderboard h2 {
+    color: #5a189a;
+    font-weight: bold;
+    font-size: 1.5rem;
+    font-family: "Courier New", Courier, monospace;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(45deg, #9d4edd, #5a189a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0;
+  }
+  
+  .leaderboard table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(90, 24, 154, 0.1);
+  }
+  
+  .leaderboard th {
+    background: linear-gradient(45deg, #9d4edd, #5a189a);
+    color: white;
+    padding: 0.5rem;
+    font-weight: bold;
+    text-align: center;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    letter-spacing: 0.5px;
+    border: none;
+  }
+  
+  /* First and last th rounded corners */
+  .leaderboard th:first-child {
+    border-top-left-radius: 1rem;
+  }
+  
+  .leaderboard th:last-child {
+    border-top-right-radius: 1rem;
+  }
+  
+  /* Table cells */
+  .leaderboard td {
+    padding: 0.8rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(157, 78, 221, 0.2);
+    color: #3c096c;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Hover effect on rows */
+  .leaderboard tr:hover td {
+    background-color: rgba(157, 78, 221, 0.05);
+  }
+  
+  /* Current user highlighting */
+  .leaderboard tr[style*="background-color: rgb(155, 205, 255)"] td {
+    background-color: rgba(157, 78, 221, 0.15) !important;
+    font-weight: bold;
+    position: relative;
+  }
+  
+  /* Add a subtle indicator for the current user */
+  .leaderboard tr[style*="background-color: rgb(155, 205, 255)"] td:first-child::before {
+    content: "➤";
+    position: absolute;
+    left: 0.3rem;
+    color: #9d4edd;
+  }
+  
+  /* Rank column styling */
+  .leaderboard td:first-child {
+    font-weight: bold;
+    color: #5a189a;
+  }
+  
+  /* Prize column styling */
+  .leaderboard td:last-child {
+    font-size: 1.2rem;
+  }
+  
+  /* Zebra striping for better readability */
+  .leaderboard tr:nth-child(even) td {
+    background-color: rgba(157, 78, 221, 0.03);
+  }
+  
+  /* Last row styling */
+  .leaderboard tr:last-child td {
+    border-bottom: none;
+  }
+  
+  /* Empty state styling */
+  .leaderboard p {
+    text-align: center;
+    padding: 2rem;
+    color: #5a189a;
+    font-style: italic;
+    background-color: rgba(157, 78, 221, 0.05);
+    border-radius: 1rem;
+    margin: 1rem 0;
+  }
+  
+  /* Loading state */
+  .leaderboard p:contains("Loading") {
+    background: linear-gradient(90deg, rgba(157, 78, 221, 0.05) 25%, rgba(157, 78, 221, 0.1) 50%, rgba(157, 78, 221, 0.05) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+  
+  @keyframes loading {
+    0% {
+      background-position: 200% 0;
+    }
+  
+    100% {
+      background-position: -200% 0;
+    }
+  }

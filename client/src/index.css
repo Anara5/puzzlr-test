@@ -1,0 +1,129 @@
+body {
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-size: large;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: radial-gradient(at bottom, #5c62a2 0%, #000000 90%) no-repeat center fixed;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.signup, .login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.signup h2, .login h2 {
+  font-size: 2rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: gold;
+}
+
+.signup form, .login form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup input, .login input {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  width: 10rem;
+  border: 0.2rem solid gold;
+  border-radius: 0.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: gold;
+}
+
+.header span {
+  color: #5a189a;
+  font-weight: bold;
+  font-size: 1.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: goldenrod;
+  font-weight: 800;
+  font-size: 2rem;
+}
+
+.header button, .signup button, .login button {
+  background: radial-gradient(circle, #9d4edd, #5a189a);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bolder;
+  font-family: 'Courier New', Courier, monospace;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(90, 24, 154, 0.3);
+}
+
+.header button:hover, .signup button:hover, .login button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(90, 24, 154, 0.4);
+  background: radial-gradient(circle, #b65eff, #7b2cbf);
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .content h2 {
+    font-size: 1.2rem;
+  }
+
+  .content p {
+    font-size: 0.8rem;
+  }
+}
