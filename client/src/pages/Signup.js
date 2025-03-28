@@ -40,7 +40,7 @@ const Signup = () => {
         <Link 
           to="/login" 
           style={{ color: "gold"}}
-        > Login </Link>
+        >Login</Link>
       </p>
     </div>
   );

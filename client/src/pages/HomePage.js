@@ -1,157 +1,89 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { io } from "socket.io-client";
 import getSmileyGif from "../components/getSmileyGif";
 import Game from "../components/game/Game";
 import Leaderboard from "../components/leaderboard/Leaderboard";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { fetchUserScore, fetchLeaderboard, fetchRanking, updateScore, updateLeaderboard } from "../redux/scoreSlice";
+import { io } from "socket.io-client";
 
 const HomePage = () => {
-  const { user, token, logout } = useAuth();
-  const [score, setScore] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [leaderboard, setLeaderboard] = useState([]);
-  const [ranking, setRanking] = useState(null);
+  const dispatch = useDispatch();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
 
-  const navigate = useNavigate();
+  // Get state from Redux store
+  const { user, token, score, leaderboard, ranking, loading } = useSelector((state) => state.score);
 
+  // Helper function to get username from email
   const getUsernameFromEmail = (email) => {
-    return email ? email.split("@")[0] : "Unknown"
+    return email ? email.split("@")[0] : "Unknown";
   }
 
   // Initialize socket connection
   useEffect(() => {
-    const newSocket = io("http://localhost:5001")
+    const newSocket = io("http://localhost:5001");
 
     newSocket.on("connect", () => {
       console.log("Socket connected:", newSocket.id)
-    })
+    });
 
     newSocket.on("connect_error", (error) => {
       console.error("Socket connection error:", error)
-    })
+    });
 
-    setSocket(newSocket)
+    setSocket(newSocket);
 
     return () => {
       console.log("Disconnecting socket")
-      newSocket.disconnect()
+      newSocket.disconnect();
     }
   }, []);
 
   // Set up socket event listeners
   useEffect(() => {
-    if (!socket) return
+    if (!socket) return;
 
     // Listen for leaderboard updates
     socket.on("leaderboard-update", (data) => {
-      setLeaderboard(data.leaderboard || [])
+      dispatch(updateLeaderboard(data.leaderboard || []));
 
       // When leaderboard updates, also update the user's ranking
       if (token) {
-        fetchRanking()
+        dispatch(fetchRanking());
       }
     })
 
     return () => {
-      socket.off("leaderboard-update")
+      socket.off("leaderboard-update");
     }
-  }, [socket, token]);
+  }, [dispatch, socket, token]);
 
-  const handleLogout = () => {
-    logout()
-    navigate("/login") // Redirect to login page
-  }
-
-  // Fetch user score
-  useEffect(() => {
-    const fetchScore = async () => {
-      if (!token) {
-        setLoading(false)
-        return
-      }
-
-      setLoading(true)
-      setError(null)
-
-      try {
-        const res = await axios.get("http://localhost:5001/api/auth/score", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-
-        setScore(res.data.score)
-        setLoading(false)
-      } catch (error) {
-        console.error("Score fetch error:", error.response?.data || error.message)
-        setError(error.response?.data?.msg || "Failed to fetch score")
-        setLoading(false)
-      }
-    }
-
-    fetchScore()
-  }, [token]);
-
-  // Fetch leaderboard initially
-  useEffect(() => {
-    const fetchLeaderboard = async () => {
-      try {
-        const res = await axios.get("http://localhost:5001/api/auth/leaderboard?limit=10")
-        setLeaderboard(res.data.leaderboard || [])
-      } catch (error) {
-        console.error("Leaderboard fetch error:", error.response?.data || error.message)
-      }
-    }
-
-    fetchLeaderboard();
-  }, []);
-
-  // Fetch player ranking
-  const fetchRanking = async () => {
-    if (!token) return;
-
-    try {
-      console.log("Fetching ranking data")
-      const res = await axios.get("http://localhost:5001/api/auth/ranking", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-
-      setRanking(res.data)
-
-    } catch (error) {
-      console.error("Ranking fetch error:", error.response?.data || error.message)
-    }
-  }
-
-  // Fetch player ranking initially
+  // Initial data loading
   useEffect(() => {
     if (token) {
-      fetchRanking()
+      dispatch(fetchUserScore());
+      dispatch(fetchRanking());
     }
-  }, [token]);
+    dispatch(fetchLeaderboard());
+  }, [dispatch, token]);
 
-  const handleCardClick = async () => {
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  }
+
+  const handleCardClick = () => {
     if (!token) return;
 
     const change = Math.floor(Math.random() * 10) - 5;
+    console.log("Updating score with change:", change);
 
-    try {
-      const res = await axios.post(
-        "http://localhost:5001/api/auth/score",
-        { change },
-        { headers: { Authorization: `Bearer ${token}` } },
-      )
-
-      setScore(res.data.newScore)
-
-    } catch (err) {
-      console.error("Score update error:", err.response?.data || err.message)
-      setError(err.response?.data?.msg || "Failed to update score")
-    }
+    dispatch(updateScore(change));
   }
 
   return (
@@ -169,6 +101,7 @@ const HomePage = () => {
           leaderboard={leaderboard}
           user={user}
           getUsernameFromEmail={getUsernameFromEmail}
+          loading={loading.leaderboard}
         />
 
         <div className="main">
@@ -183,10 +116,9 @@ const HomePage = () => {
 
           <Game
             score={score}
-            loading={loading}
             ranking={ranking}
             handleCardClick={handleCardClick}
-            error={error}
+            loading={loading.score}
           />
         </div>
 

@@ -57,7 +57,11 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       <p>
-        Do not have an account ? <Link to="/signup" style={{ color: "gold"}}> Sign Up </Link>
+        Do not have an account ? 
+        <Link 
+          to="/signup" 
+          style={{ color: "gold"}}
+        >Sign Up</Link>
       </p>
     </div>
   );

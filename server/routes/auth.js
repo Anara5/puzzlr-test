@@ -7,7 +7,7 @@ require("dotenv").config();
 
 const router = express.Router();
 
-// **Signup Route**
+// **Signup Route **
 router.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
@@ -27,7 +27,7 @@ router.post("/signup", async (req, res) => {
   }
 })
 
-// **Login Route**
+// **Login Route **
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -55,7 +55,7 @@ router.post("/login", async (req, res) => {
     }
 
     // Generate token with userId property
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || "your_jwt_secret", { expiresIn: "1h" });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || "your_jwt_secret", { expiresIn: "2h" });
 
     // Send only token and user info (avoid sending password)
     res.json({ token, user: { id: user._id, email: user.email } });

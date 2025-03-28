@@ -29,7 +29,7 @@ Navigate to the server directory:
 
 ### `cd server`
 ### `npm install`
-### `node server.js`
+### `npm start`
 
 The server runs on port 5001.
 It connects to MongoDB for storing user data and scores.
